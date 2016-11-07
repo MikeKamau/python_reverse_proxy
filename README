@@ -1,0 +1,14 @@
+PREREQUISITES
+==============
+You should have pyton 2 installed to run this scripts.
+
+FUNCTION
+==============
+The project has to files, server.py is the reverse shell server, while client.py is the reverse shell client.
+
+
+RUNNING THE SCRIPTS
+====================
+To run the scripts just type python followed by the name of the script in a terminal, e.g. python server.py
+Make sure to run the server.py file first before client.py.
+

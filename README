@@ -1,6 +1,6 @@
 PREREQUISITES
 ==============
-You should have pyton 2 installed to run these scripts.
+You should have pyton 2.7 and the pycrypto library installed to run these scripts.
 
 FUNCTION
 ==============

